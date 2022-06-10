@@ -78,7 +78,9 @@ async def deleteBullet(update: Update, context: CallbackContext):
 
 if __name__ == '__main__':
     load_dotenv('.env')
-    application = ApplicationBuilder().token(os.getenv('BOT_TOKEN')).build()
+    TOKEN = os.getenv('BOT_TOKEN')
+    application = ApplicationBuilder().token(TOKEN).build()
+    PORT = int(os.environ.get('PORT', '8443'))
     
     get_handler = CommandHandler('getNote', getNote)
     add_handler = CommandHandler('addBullet', addBullet)
@@ -91,4 +93,9 @@ if __name__ == '__main__':
     application.add_handler(del_handler)
 
     
-    application.run_polling()
+    application.run_webhook(
+    listen="0.0.0.0",
+    port=PORT,
+    url_path=TOKEN,
+    webhook_url="https://dendron-telegram.herokuapp.com/" + TOKEN
+)
