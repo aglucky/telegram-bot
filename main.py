@@ -89,8 +89,8 @@ if __name__ == '__main__':
     
 
     application.add_handler(get_handler, filters.user(username="@agluck1"))
-    application.add_handler(add_handler)
-    application.add_handler(del_handler)
+    application.add_handler(add_handler, filters.user(username="@agluck1"))
+    application.add_handler(del_handler, filters.user(username="@agluck1"))
 
     
     application.run_webhook(
