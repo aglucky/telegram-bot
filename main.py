@@ -52,6 +52,67 @@ async def addBullet(update: Update, context: CallbackContext):
         text=result
         )
 
+async def getNote(update: Update, context: CallbackContext):
+        g = Github(os.getenv('GITHUB_TOKEN'))
+        repo = g.get_repo("aglucky/knowledge")
+        note = repo.get_contents("notes/what-im-doing.telegram-notes.md")
+        response = requests.get(note.download_url)
+
+        await context.bot.send_message(
+        chat_id=update.effective_chat.id, 
+        text=response.text)
+
+async def addBullet(update: Update, context: CallbackContext):
+        # Setup Github
+        g = Github(os.getenv('GITHUB_TOKEN'))
+        repo = g.get_repo("aglucky/knowledge")
+
+        # Get updated note content
+        note = repo.get_contents("notes/what-im-doing.telegram-notes.md")
+        note_text = requests.get(note.download_url).text
+        note_text += f"\n- {datetime.now().date()}\n\t- " + "".join(context.args)
+        updated_note = repo.update_file("notes/what-im-doing.telegram-notes.md", "telegram update", note_text, note.sha)
+        
+        result = "failed"
+        if updated_note:
+            result = "success"
+
+        # Bot response
+        await context.bot.send_message(
+        chat_id=update.effective_chat.id, 
+        text=result
+        )
+
+async def getNote(update: Update, context: CallbackContext):
+        g = Github(os.getenv('GITHUB_TOKEN'))
+        repo = g.get_repo("aglucky/knowledge")
+        note = repo.get_contents("notes/what-im-doing.telegram-notes.md")
+        response = requests.get(note.download_url)
+
+        await context.bot.send_message(
+        chat_id=update.effective_chat.id, 
+        text=response.text)
+
+async def DeletedBullet(update: Update, context: CallbackContext):
+        # Setup Github
+        g = Github(os.getenv('GITHUB_TOKEN'))
+        repo = g.get_repo("aglucky/knowledge")
+
+        # Get updated note content
+        note = repo.get_contents("notes/what-im-doing.telegram-notes.md")
+        note_text = requests.get(note.download_url).text
+        new_text = "\n".join(note_text.split("\n")[:-2])
+        updated_note = repo.update_file("notes/what-im-doing.telegram-notes.md", "telegram update", new_text, note.sha)
+        
+        result = "failed"
+        if updated_note:
+            result = "success"
+
+        # Bot response
+        await context.bot.send_message(
+        chat_id=update.effective_chat.id, 
+        text=result
+        )
 
 
 
