@@ -39,7 +39,7 @@ async def addBullet(update: Update, context: CallbackContext):
         # Get updated note content
         note = repo.get_contents("notes/what-im-doing.telegram-notes.md")
         note_text = requests.get(note.download_url).text
-        note_text += f"\n- {datetime.now().date()}\n\t- " + "".join(context.args)
+        note_text += f"\n- {datetime.now().date()}\n\t- " + " ".join(context.args)
         updated_note = repo.update_file("notes/what-im-doing.telegram-notes.md", "telegram update add", note_text, note.sha)
         
         result = "failed"
