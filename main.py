@@ -40,7 +40,7 @@ async def addBullet(update: Update, context: CallbackContext):
         note = repo.get_contents("notes/what-im-doing.telegram-notes.md")
         note_text = requests.get(note.download_url).text
         note_text += f"\n- {datetime.now().date()}\n\t- " + "".join(context.args)
-        updated_note = repo.update_file("notes/what-im-doing.telegram-notes.md", "telegram update", note_text, note.sha)
+        updated_note = repo.update_file("notes/what-im-doing.telegram-notes.md", "telegram update add", note_text, note.sha)
         
         result = "failed"
         if updated_note:
@@ -62,7 +62,7 @@ async def deleteBullet(update: Update, context: CallbackContext):
         note = repo.get_contents("notes/what-im-doing.telegram-notes.md")
         note_text = requests.get(note.download_url).text
         new_text = "\n".join(note_text.split("\n")[:-2])
-        updated_note = repo.update_file("notes/what-im-doing.telegram-notes.md", "telegram update", new_text, note.sha)
+        updated_note = repo.update_file("notes/what-im-doing.telegram-notes.md", "telegram update delete", new_text, note.sha)
         
         result = "failed"
         if updated_note:
