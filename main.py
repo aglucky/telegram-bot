@@ -9,7 +9,6 @@ from github import Github
 import time
 
 
-
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
@@ -82,12 +81,14 @@ if __name__ == '__main__':
     application = ApplicationBuilder().token(TOKEN).build()
     PORT = int(os.environ.get('PORT', '8443'))
     
+    start_handler = CommandHandler('start', start)
     get_handler = CommandHandler('getNote', getNote)
     add_handler = CommandHandler('addBullet', addBullet)
-    del_handler = CommandHandler('deleteBullet', deleteBullet)
+    del_handler = CommandHandler('deleteBullet', deleteBullet, filters=filters.User(username=='agluck1'))
 
     
 
+    application.add_handler(start_handler)
     application.add_handler(get_handler)
     application.add_handler(add_handler)
     application.add_handler(del_handler)
