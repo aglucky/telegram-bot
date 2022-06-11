@@ -83,7 +83,7 @@ if __name__ == '__main__':
     
     start_handler = CommandHandler('start', start)
     get_handler = CommandHandler('getNote', getNote)
-    add_handler = CommandHandler('addBullet', addBullet)
+    add_handler = CommandHandler('addBullet', addBullet, filters=filters.User(username='agluck1'))
     del_handler = CommandHandler('deleteBullet', deleteBullet, filters=filters.User(username='agluck1'))
 
     
