@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/d27c8493-6ed0-4d66-a22d-c9fe86a18fba/microsoft.web/sites/subscriptions/d27c8493-6ed0-4d66-a22d-c9fe86a18fba/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/telegram-bot-adam",
+    "appService.deploySubpath": "."
+}
