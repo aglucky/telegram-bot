@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'telegram-bot-adam'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_0CC875F158664C40B6FCEBCCE813B687 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9EC1E61B30B9406FB5A39F34C1849DF4 }}
