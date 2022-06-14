@@ -6,7 +6,7 @@ from datetime import datetime
 import requests
 import os
 from github import Github
-import time
+import random
 
 
 logging.basicConfig(
@@ -17,7 +17,26 @@ logging.basicConfig(
 async def start(update: Update, context: CallbackContext):
     await context.bot.send_message(
         chat_id=update.effective_chat.id, 
-        text="Dendron Bot is online!"
+        text="Gluck Bot is online!"
+        )
+
+async def xkcd(update: Update, context: CallbackContext):
+    # Make Sure the user has provided a number
+    try:
+        num = int(context.args[0])
+        url = f"https://xkcd.com/{num}/info.0.json"
+    except:
+        url = "https://xkcd.com/info.0.json"
+        
+    # Get the comic
+    comic = requests.get(url)
+    text = "comic not found"
+    if comic.status_code == 200:
+        text = f"{comic.json()['title']}\n{comic.json()['img']}"
+
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id, 
+        text=text
         )
 
 async def getNote(update: Update, context: CallbackContext):
@@ -80,11 +99,13 @@ if __name__ == '__main__':
     TOKEN = os.getenv('BOT_TOKEN')
     application = ApplicationBuilder().token(TOKEN).build()
     PORT = int(os.environ.get('PORT', '8443'))
+    job_queue = application.job_queue
     
     start_handler = CommandHandler('start', start)
     get_handler = CommandHandler('getNote', getNote)
     add_handler = CommandHandler('addBullet', addBullet, filters=filters.User(username='agluck1'))
     del_handler = CommandHandler('deleteBullet', deleteBullet, filters=filters.User(username='agluck1'))
+    xkcd_handler = CommandHandler('xkcd', xkcd)
 
     
 
@@ -92,11 +113,12 @@ if __name__ == '__main__':
     application.add_handler(get_handler)
     application.add_handler(add_handler)
     application.add_handler(del_handler)
+    application.add_handler(xkcd_handler)
 
-    
     application.run_webhook(
     listen="0.0.0.0",
     port=PORT,
     url_path=TOKEN,
     webhook_url="https://telegram-bot-adam.azurewebsites.net/" + TOKEN
     )
+
