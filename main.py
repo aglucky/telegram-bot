@@ -32,7 +32,7 @@ async def xkcd(update: Update, context: CallbackContext):
     comic = requests.get(url)
     text = "comic not found"
     if comic.status_code == 200:
-        text = f"{comic.json()['title']}\n{comic.json()['img']}"
+        text = f"{comic.json()['title']}\n{comic.json()['img']}\n{comic.json()['alt']}"
 
     await context.bot.send_message(
         chat_id=update.effective_chat.id, 
