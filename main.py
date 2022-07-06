@@ -133,11 +133,10 @@ if __name__ == '__main__':
     application.add_handler(xkcd_handler)
     application.add_handler(wordle_handler)
 
-    # application.run_webhook(
-    # listen="0.0.0.0",
-    # port=PORT,
-    # url_path=TOKEN,
-    # webhook_url="https://telegram-bot-adam.azurewebsites.net/" + TOKEN
-    # )
+    application.run_webhook(
+    listen="0.0.0.0",
+    port=PORT,
+    url_path=TOKEN,
+    webhook_url="https://telegram-bot-adam.azurewebsites.net/" + TOKEN
+    )
 
-    application.run_polling()
