@@ -9,18 +9,6 @@ import os
 from dotenv import load_dotenv
 import requests
 import time
-from PIL import Image
-import pillow_heif
-
-def change_heif(path):
-    heif_file = pillow_heif.read_heif(path)
-    image = Image.frombytes(
-    heif_file.mode,
-    heif_file.size,
-    heif_file.data,
-    "raw",
-    )
-    image.save(path, format="png")
 
 # Function to perform sorting
 def countDistinct(s):
@@ -72,8 +60,6 @@ def contour_sort(a, b):
 #TODO add support for iphone screenshots
 def process_image(path):
     #Get contours with wordle information
-    if 'heic' in path:
-        change_heif(path)
     img = cv2.imread(path)
     dim = (1200,1900)
     img = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
