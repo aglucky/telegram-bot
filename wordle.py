@@ -7,7 +7,6 @@ from functools import cmp_to_key
 import numpy as np
 import os
 from dotenv import load_dotenv
-import requests
 import time
 
 # Function to perform sorting
