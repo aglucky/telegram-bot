@@ -1,5 +1,5 @@
 import logging
-from telegram import Update, InlineQueryResultArticle, InputTextMessageContent
+from telegram import Update
 from telegram.ext import filters, ApplicationBuilder, CallbackContext, CommandHandler, MessageHandler
 from dotenv import load_dotenv
 from datetime import datetime
@@ -86,7 +86,7 @@ async def deleteBullet(update: Update, context: CallbackContext):
             result = "success"
 
         # Bot response
-        await context.bot.send_meissage(
+        await context.bot.send_message(
         chat_id=update.effective_chat.id, 
         text=result
         )
