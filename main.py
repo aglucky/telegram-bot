@@ -6,7 +6,7 @@ from datetime import datetime
 import requests
 import os
 from github import Github
-from wordle import final_action
+#from wordle import final_action
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
