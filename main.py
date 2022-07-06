@@ -1,11 +1,12 @@
 import logging
 from telegram import Update, InlineQueryResultArticle, InputTextMessageContent
-from telegram.ext import filters, ApplicationBuilder, CallbackContext, CommandHandler, MessageHandler, InlineQueryHandler
+from telegram.ext import filters, ApplicationBuilder, CallbackContext, CommandHandler, MessageHandler
 from dotenv import load_dotenv
 from datetime import datetime
 import requests
 import os
 from github import Github
+from wordle import final_action
 import random
 
 
@@ -92,6 +93,21 @@ async def deleteBullet(update: Update, context: CallbackContext):
         text=result
         )
 
+async def solveWordle(update: Update, context: CallbackContext):
+    print('here')
+    file = await context.bot.getFile(update.message.photo[-1].file_id)
+    path = 'wordle.png'
+    await file.download(path)
+    result = final_action(path)
+    os.remove(path)
+
+    # Bot response
+    await context.bot.send_message(
+    chat_id=update.effective_chat.id, 
+    text=result
+    )
+
+
 
 
 if __name__ == '__main__':
@@ -106,6 +122,7 @@ if __name__ == '__main__':
     add_handler = CommandHandler('addBullet', addBullet, filters=filters.User(username='agluck1'))
     del_handler = CommandHandler('deleteBullet', deleteBullet, filters=filters.User(username='agluck1'))
     xkcd_handler = CommandHandler('xkcd', xkcd)
+    wordle_handler = MessageHandler(filters.PHOTO, solveWordle)
 
     
 
@@ -114,11 +131,13 @@ if __name__ == '__main__':
     application.add_handler(add_handler)
     application.add_handler(del_handler)
     application.add_handler(xkcd_handler)
+    application.add_handler(wordle_handler)
 
-    application.run_webhook(
-    listen="0.0.0.0",
-    port=PORT,
-    url_path=TOKEN,
-    webhook_url="https://telegram-bot-adam.azurewebsites.net/" + TOKEN
-    )
+    # application.run_webhook(
+    # listen="0.0.0.0",
+    # port=PORT,
+    # url_path=TOKEN,
+    # webhook_url="https://telegram-bot-adam.azurewebsites.net/" + TOKEN
+    # )
 
+    application.run_polling()
