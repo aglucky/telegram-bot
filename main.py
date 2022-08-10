@@ -7,6 +7,7 @@ import requests
 import os
 from github import Github
 from wordle import final_action
+from internship import queryInternship
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -92,7 +93,6 @@ async def deleteBullet(update: Update, context: CallbackContext):
         )
 
 async def solveWordle(update: Update, context: CallbackContext):
-    print('here')
     file = await context.bot.getFile(update.message.photo[-1].file_id)
     path = 'wordle.png'
     await file.download(path)
@@ -105,7 +105,18 @@ async def solveWordle(update: Update, context: CallbackContext):
     text=result
     )
 
+async def getInternships(update: Update, context: CallbackContext):
+    query = context.args[0]
+    pos = 0
+    if len(context.args) > 1:
+        pos = int(context.args[1])
+    text = queryInternship(query, pos)
 
+    # Bot response
+    await context.bot.send_message(
+    chat_id=update.effective_chat.id, 
+    text=text
+    )
 
 
 if __name__ == '__main__':
@@ -121,6 +132,8 @@ if __name__ == '__main__':
     del_handler = CommandHandler('deleteBullet', deleteBullet, filters=filters.User(username='agluck1'))
     xkcd_handler = CommandHandler('xkcd', xkcd)
     wordle_handler = MessageHandler(filters.PHOTO, solveWordle)
+    intern_handler = CommandHandler('intern', getInternships)
+
 
     
 
@@ -130,6 +143,7 @@ if __name__ == '__main__':
     application.add_handler(del_handler)
     application.add_handler(xkcd_handler)
     application.add_handler(wordle_handler)
+    application.add_handler(intern_handler)
 
     application.run_webhook(
     listen="0.0.0.0",
