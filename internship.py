@@ -8,10 +8,10 @@ def queryInternship(query, pos):
     text = ""
     try:
         for i in results[pos:pos+5]:
-            text += f"""{i['company']}, {i['season']} {i['yr']}
+            text += f"""- {i['company']}, {i['season']} {i['yr']}
                         Location: {i['loc']}
                         Pay: {i['hourlySalary']}/hr or {i['monthlySalary']}"
-                        More info: {i['moreInfo']}\n"""
+                        More info: {i['moreInfo']}\n\n"""
     except:
         text = "No results found"
     return text
