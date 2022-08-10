@@ -15,3 +15,5 @@ def queryInternship(query, pos):
     except:
         text = "No results found"
     return text
+
+print(queryInternship("google", 0))
