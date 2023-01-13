@@ -17,5 +17,3 @@ def queryInternship(query, pos):
     if text == "":
         text = "No results found"
     return text
-
-print(queryInternship("amazon", 0))
