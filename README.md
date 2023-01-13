@@ -2,8 +2,8 @@
 
 Telegram bot to help me with common tasks
 
-## Featurs
+## Features
 
-- Note bullets
+- Note bullets for [glucknotes.com](glucknotes.come)
 - Wordle Solver from screenshot
 - xkcd generator
