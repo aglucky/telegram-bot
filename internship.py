@@ -1,5 +1,4 @@
 import requests
-from collections import defaultdict
 
 
 def queryInternship(query, pos):
