@@ -201,6 +201,4 @@ def final_action(image):
     return solve_wordle(data)
 
 # img, contours = process_image('wordle.png')
-# print(len(contours))
-
-print(final_action('wordle2.png'))
+# print(len(contours)
